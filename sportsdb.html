@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--BootStrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <!--Own CSS-->
+    <link rel="stylesheet" type="text/css" href="./sportsdb.css">
+    <!--JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+        </script>
+    <title>SportsDB</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
+        <a class="navbar-brand" href="#">S P O R T I F Y</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="ufc.html">UFC <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="football.html">Football</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="f1.html">F1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sportsdb.html">SportDB</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--Content-->
+    <div id="container">
+        <div id="left">
+            <div>
+                <input type="text" placeholder="Search.." name="search" id="searchbar">
+                <br><br>
+                <button id="Premier" class="category" type="submit" value="Premier">Premier League</button>
+                <button id="NBA" class="category" type="submit" value="NBA">NBA</button>
+                <button id="NBA" class="category" type="submit" value="NFL">NFL</button>
+            </div>
+            <div id="left-content">
+                <!--Content will be displayed when button is clicked-->
+            </div>
+        </div>
+        <div id="right" style="display:none">
+            <!--Content will be displayed when one of the data in "left-content" is clicked-->
+        </div>
+    </div>
+
+    <div id="players" style="padding:10px">
+        <table id="players_table" style="display:none" class="table-striped table">
+            <tr>
+                <th>Name</th>
+                <th>Picture</th>
+                <th>Nationality</th>
+                <th>Birthdate</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        $( document ).ready(function() {
+            checkToken()
+        });
+
+        function checkToken(){
+            let token = localStorage.getItem('token')
+            if(token){
+
+            }else{
+                window.location = 'login.html'
+            }
+        }
+        //to display details
+        function forData(category, team) {
+            $.ajax({
+                method: "GET",
+                url: `http://localhost:3000/sportdb/${category}/${team}`
+            })
+                .done(function (response) {
+                    $("#left").width("40%")
+                    $("#right").show()
+                    $("#right").text("")
+                    $("#right").append(
+                        `<img src=${response.teams[0].strTeamBadge} width="50%"></img><br><br>
+                        <button class="data" onclick="playerList('${response.teams[0].strTeam}')">Player List</button><br><br>
+                        <b>Team Name:</b> ${response.teams[0].strTeam}<br><br> 
+                        <b>Current Manager:</b> ${response.teams[0].strManager}<br><br>
+                        <b>Est.:</b> ${response.teams[0].intFormedYear}<br><br> 
+                        <b>Stadium:</b> ${response.teams[0].strStadium}<br><br> 
+                        <b>Stadium Location:</b> ${response.teams[0].strStadiumLocation}<br><br> 
+                        <b>Description:</b> ${response.teams[0].strDescriptionEN}<br><br>
+                      `)
+                })
+                .fail(function (error) {
+                    alert(JSON.stringify(error))
+                })
+        }
+        //get player data based on team
+        function playerList(team) {
+            $.ajax({
+                method: "GET",
+                url: `http://localhost:3000/sportdb/players/${team}`
+            })
+                .done(function (response) {
+                    $(".playerRow").remove()
+                    $.each(response.players, function (data, content) {
+                        $("#players_table tr:last").after(`
+                        <tr class ="playerRow">
+                            <td>${content.strPlayer}</td>
+                            <td><img src='${content.strThumb}' style="margin:0px;width:10%" alt="Player Photo"></img></td>
+                            <td>${content.strNationality}</td>
+                            <td>${content.dateBorn}</td>
+                        </tr>
+                        `)
+                        $("#players_table").show()
+                    })
+                })
+                .fail(function (error) {
+                    alert(JSON.stringify(error))
+                })
+        }
+        //search bar key up
+        $("#searchbar").on("keyup", function () {
+            let value = $(this).val().toLowerCase(); //lowercase so the search will show up regardless of CAPS
+            $(".data").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            })
+        })
+
+        //show all teams based on category
+        $(".category").click(function () {
+            let category = this.value
+            $.ajax({
+                method: "GET",
+                url: `http://localhost:3000/sportdb/${category}`
+            })
+                .done(function (response) {
+                    $("#left-content").text("")
+                    $.each(response.teams, function (data, content) {
+                        $("#left-content").append(`<div class="data"><p style="cursor: pointer;" onclick="forData('${category}', '${content.strTeam}')"><img src=${content.strTeamBadge} width="20%"></img><br>${content.strTeam}</p></div><br>`)
+                    })
+                })
+                .fail(function (error) {
+                    alert(JSON.stringify(error))
+                })
+        })
+    </script>
+    <!--BootStrap JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

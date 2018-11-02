@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        /* Create three equal columns that floats next to each other */
+        
+        .tablescorers {
+            max-width: 33.33%;
+        }
+        
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 10px;
+            height: 300px;
+            /* Should be removed. Only for demonstration */
+        }
+        
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
+        <a class="navbar-brand" href="#">S P O R T I F Y</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="ufc.html">UFC <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="football.html">Football</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="f1.html">F1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sportsdb.html">SportDB</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="dialog" title="Basic dialog">
+
+    </div>
+    <div class="row" style="text-align:center">
+        <div class="col-sm"><img src="https://seeklogo.com/images/P/premier-league-new-logo-D22A0CE87E-seeklogo.com.png" alt="" style="max-width:100px;" onclick="init(2021)"></div>
+        <div class="col-sm"><img src="http://a2.espncdn.com/combiner/i?img=%2Fi%2Fleaguelogos%2Fsoccer%2F500%2F15.png" alt="" style="max-width:100px;" onclick="init(2019)"></div>
+        <div class="col-sm"><img src="http://a4.espncdn.com/combiner/i?img=%2Fi%2Fleaguelogos%2Fsoccer%2F500%2F12.png" alt="" style="max-width:100px;" onclick="init(2014)"></div>
+    </div>
+
+    <div class="row">
+        <div class="column" style="height:100%;padding:10px;text-align:center">
+            <h2>Standings</h2>
+            <input type="text" id="teamid" class="form-control" style="width:50%;display:inline;">
+            <button id="opener" onclick="getMatches()" class="btn btn-dark">Search Fixtures</button>
+            <ol id="standings">
+
+            </ol>
+        </div>
+        <div class="column" style="height:100%;text-align:center">
+            <h2>Top Scorers</h2>
+            <table id="top" class="table">
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Club</th>
+                    <th>Total</th>
+                </tr>
+            </table>
+        </div>
+        <div class="column" style="height:100%">
+            <h2>Detail Team</h2>
+            <div id='pic'></div>
+            <ol id="players" style="height: 200px;overflow: auto;">
+
+            </ol>
+            <h2>Next Match</h2>
+            <ol id="next" style="height: 200px;overflow: auto;">
+
+            </ol>
+
+        </div>
+    </div>
+    <script>
+        function init(value) {
+            $('.tablescorers').remove()
+            $('.list').remove()
+            $('.listplayer').remove()
+            $('.next').remove()
+            $('.imgclub').remove()
+            $.ajax({
+                    //ajax untuk akses sebuah API
+                    method: "GET",
+                    dataType: "JSON",
+                    url: `http://localhost:3000/football/scorers/${value}`
+                })
+                .done(function(data) {
+                    // array of object
+                    $.each(data, function(index, value) {
+                        // let str = `${$(id).val()},${parsed[index].name}`
+                        $('#top').append(
+                            `
+                            <tr class="tablescorers">
+                                <td class="tablescorers">${index+1}</td>
+                                <td class="tablescorers">${data[index].player.name}</td>
+                                <td class="tablescorers">${data[index].team.name}</td>
+                                <td class="tablescorers">${data[index].numberOfGoals}</td>
+                            </tr>`
+                        )
+                    });
+                })
+                .fail(function(err) {
+                    alert('check console')
+                    console.log(err.message)
+                })
+            $.ajax({
+                    //ajax untuk akses sebuah API
+                    method: "GET",
+                    dataType: "JSON",
+                    url: `http://localhost:3000/football/standings/${value}`
+                })
+                .done(function(data) {
+                    // array of object
+                    $.each(data, function(index, value) {
+                        // let str = `${$(id).val()},${parsed[index].name}`
+                        $('#standings').append(
+                            `<li class="list" style="cursor:pointer;" onclick="getDetailTeam(${data[index].team.id});getNext(${data[index].team.id})">${data[index].team.name}(${data[index].team.id})</li>`
+                        )
+                    });
+                })
+                .fail(function(err) {
+                    alert('check console')
+                    console.log(err.message)
+                })
+        }
+
+        function getNext(value) {
+            $('.next').remove()
+            $.ajax({
+                    //ajax untuk akses sebuah API
+                    method: "GET",
+                    dataType: "JSON",
+                    url: `http://localhost:3000/football/matches/${value}`
+                })
+                .done(function(data) {
+                    // array of object
+                    let next = data.next
+                    $.each(next, function(index, value) {
+                        var dateObj = new Date(next[index].utcDate)
+                        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+                        var day = dateObj.getUTCDate();
+                        var year = dateObj.getUTCFullYear();
+                        let newdate = day + "-" + month + "-" + year;
+                        $('#next').append(
+                            `<li class="next">${next[index].homeTeam.name} vs ${next[index].awayTeam.name}<br>(${newdate}) </li>`
+                        )
+                    });
+                })
+                .fail(function(err) {
+                    alert(err)
+                })
+        }
+
+        function getMatches(value) {
+            value = $("#teamid").val()
+            $(".listmatch").remove()
+            $.ajax({
+                    //ajax untuk akses sebuah API
+                    method: "GET",
+                    dataType: "JSON",
+                    url: `http://localhost:3000/football/matches/${value}`
+                })
+                .done(function(data) {
+                    // array of object
+                    $('#dialog').append(
+                        `<h4 class="listmatch">Previous Fixtures</h4>`
+                    )
+                    let previous = data.previous
+                    $.each(previous, function(index, value) {
+                        $('#dialog').append(
+                            `<li class="listmatch">${previous[index].homeTeam.name} vs ${previous[index].awayTeam.name} (${previous[index].score.fullTime.homeTeam} - ${previous[index].score.fullTime.awayTeam})</li>`
+                        )
+                    });
+                    // console.log(value)
+                })
+                .fail(function(err) {
+                    alert(err)
+                })
+        }
+
+        function getDetailTeam(value) {
+            $.ajax({
+                    //ajax untuk akses sebuah API
+                    method: "GET",
+                    dataType: "JSON",
+                    url: `http://localhost:3000/football/teams/${value}`
+                })
+                .done(function(data) {
+                    // array of object
+                    $('.listplayer').remove()
+                    let squad = data.squad
+                    $('.imgclub').remove()
+                    $('#pic').append(
+                        `<img class="imgclub" src="${data.crestUrl}" style="max-width:33.33%;max-height:100px;">`
+                    )
+                    $('#players').append(
+                        `
+                        <h4 class="listplayer">Meet Our Squad</h4>`
+                    )
+                    $.each(squad, function(index, value) {
+                        $('#players').append(
+                            `<li class="listplayer" style="cursor:pointer;">${squad[index].name}</li>`
+                        )
+                    });
+                    // console.log(value)
+                })
+                .fail(function(err) {
+                    alert(err)
+                })
+        }
+        $('document').ready(function() {
+            init(2021)
+        })
+    </script>
+
+    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#dialog").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
+            $("#opener").on("click", function() {
+                $("#dialog").dialog("open");
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>
