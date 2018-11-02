@@ -127,18 +127,43 @@ function getEvents(){
 }
 
 function getFighter(id){
-    console.log(id)
+    // console.log(id)
     $.ajax({
         method : 'GET',
         url : `http://ufc-data-api.ufc.com/api/v3/us/fighters/${id}.json`
     })
     .done(response=>{
-        console.log(response)
+        // console.log(response)
+        if(response.nickname === null){
+            response.nickname = ''
+        }
         $('#list').empty()
         $('#list').append(`
-
-        ${JSON.stringify(response)}
-
+            <div class="col-md-6 mt-5 mb-5">
+                <img src="${response.left_full_body_image}">
+            </div>
+            <div class="col-md-6 mt-5 mb-5">
+                <div class="card" style="width: 27rem;">
+                <div class="card-header bg-dark text-white">
+                    <h3>${response.first_name} ${response.last_name}</h3>
+                </div>
+                <div class="card-header bg-warning text-dark">
+                    <i><h4>${response.nickname}</h4></i>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Wins : </b>${response.wins}</li>
+                    <li class="list-group-item"><b>Weight (kg) : </b>${response.weight_kg}</li>
+                    <li class="list-group-item"><b>Weight Class : </b>${response.weight_class}</li>
+                    <li class="list-group-item"><b>Strengths : </b>${response.strengths}</li>
+                    <li class="list-group-item"><b>Striking Accuracy : </b>${response.StrikingAccuracy}</li>
+                    <li class="list-group-item"><b>Striking Defense : </b>${response.StrikingDefense}</li>
+                    <li class="list-group-item"><b>Submissions Average : </b>${response.SubmissionsAverage}</li>
+                    <li class="list-group-item"><b>Takedown Accuracy : </b>${response.TakedownAccuracy}</li>
+                    <li class="list-group-item"><b>Takedown Average : </b>${response.TakedownAverage}</li>
+                    <li class="list-group-item"><b>Takedown Defense : </b>${response.TakedownDefense}</li>
+                </ul>
+                </div>
+            </div>
         `)
     })
     .fail(error=>{
