@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
+        crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <title>Sportify</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="ufc.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Sportify</span>
+    </nav>
+    <!-- Jumbotron -->
+    <div class="jumbotron jumbotron-fluid text-center" style="background-color: white;">
+        <div class="container">
+            <img src="https://seeklogo.com/images/U/ufc-logo-18EA8FFA45-seeklogo.com.png">
+        </div>
+    </div>
+    <!-- Container -->
+    <div class="container">
+        <div class="row text-center text-white">
+            <div class="col">
+                <a id="buttonC" class="btn btn-dark" onclick="getChampions()"><b class="ml-5 mr-5">Champions</b></a>
+            </div>
+            <div class="col">
+                <a id="buttonN" class="btn btn-dark" onclick="getNews()"><b class="ml-5 mr-5">News</b></a>
+            </div>
+            <div class="col">
+                <a id="buttonE" class="btn btn-dark" onclick="getEvents()"><b class="ml-5 mr-5">Events</b></a>
+            </div>
+        </div>
+        <div id="list" class="row text-center mt-5">
+            <!-- input from ajax -->
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="ufc.js"></script>
+</body>
+
+</html>
