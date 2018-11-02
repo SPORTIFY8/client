@@ -42,7 +42,7 @@
         <select class="f1" id="f1Season"> </select>
         Round
         <select class="f1" id="f1Round"></select>
-        <button style="margin-left:30px" id="searchButton" >Search</button>
+        <button style="margin-left:25px" id="searchButton" >Search</button>
       </div>
      
       <div id="searchBar">
@@ -60,7 +60,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
   crossorigin="anonymous"></script>
   <script >
-    $("document").ready(function (){
+    $("document").ready(function () {
+      
+      //create drop down lists 
       for(let year=2004; year<2018; year++){
         let option=`<option id=${year}>` + year + "</option>" 
         $("#f1Season").append(option);
@@ -69,6 +71,8 @@
         let round=`<option id=round${race}>` + race + "</option>" 
         $("#f1Round").append(round)
       }
+
+      //search button feature
       $("#searchButton").click (function() {
           $("#f1Table").empty();
           let year=$("#f1Season").val();
@@ -100,6 +104,8 @@
             $("#f1Table").wrap('<div class="dataTables_scroll" />');
           })
       })
+
+      //search bar feature using enter key
       $("#driverSearch").keypress(function(e) {
           const key = e.which;
           if(key == 13) {
