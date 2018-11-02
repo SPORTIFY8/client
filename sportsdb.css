@@ -1,6 +1,7 @@
 #container {
     display: block;
-    overflow: auto
+    overflow: auto;
+    padding: 5px
 }
 #left {
     float: left;
@@ -19,7 +20,7 @@
     border: 2px black solid;
     overflow: scroll;
     padding: 5px;
-    background-color: #6C7A7D
+    background-color: #6C7A7D;
 }
 
 .data {
@@ -46,5 +47,5 @@
 
 #players {
     height: 500px;
-    overflow: scroll
+    overflow: scroll;
 }
