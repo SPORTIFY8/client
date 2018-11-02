@@ -69,7 +69,7 @@ function getNews(){
         for(let i = 0 ; i < sorted.length ; i ++){
             $('#list').append(`
             <div class="col ml-4">
-                <div class="card" style="width: 18rem;height:300px">
+                <div class="card mb-5" style="width: 18rem;height:300px">
                     <img class="card-img-top" src="${sorted[i].thumbnail}" alt="Card image cap">
                     <div class="card-body">
                         <p class="card-text font-weight-bold">${sorted[i].title}</p>
@@ -102,11 +102,11 @@ function getEvents(){
             console.log(sorted[i])
             $('#list').append(`
             <div class="col ml-4">
-                <div class="card" style="width: 18rem;height:600px">
+                <div class="card mb-3" style="width: 18rem;height:600px">
                     <div class="card-header bg-dark text-white">
                         <strong>${sorted[i].base_title}</strong>
                     </div>
-                    <img class="card-img-top mt-2" src="${sorted[i].feature_image}" alt="Card image cap">
+                    <img class="card-img-top" src="${sorted[i].feature_image}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title bg-light">${sorted[i].title_tag_line}</h5>
                         <ul class="list-group list-group-flush">
