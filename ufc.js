@@ -187,11 +187,11 @@ function getFighter(id){
         }
         $('#list').empty()
         $('#list').append(`
-            <div class="col-md-6 mt-5 mb-5">
+            <div class="col-md-6 mt-5">
                 <img src="${response.left_full_body_image}">
             </div>
-            <div class="col-md-6 mb-5">
-                <div class="card border border-dark" style="width: 27rem;">
+            <div class="col-md-6">
+                <div class="card border border-dark" style="width: 25rem;">
                 <div class="card-header bg-dark text-white">
                     <h3>${response.first_name} ${response.last_name}</h3>
                 </div>
