@@ -1,13 +1,12 @@
 .inputBox {
-  background-color: yellow;
-  color:black;
-  width: 80%;
+  background-image: url("https://www.popsci.com/sites/popsci.com/files/styles/2000_1x_/public/images/2017/12/f1-personas.jpg?itok=u8LMsEx7");
+  background-size: cover;
+  opacity: 0.8;
+  color:white;
+  width: 100%;
   padding: 10px 10px;
 }
-#searchRace {
-  background-color:white;
-  opacity: 40%;
-}
+
 .f1 {
   background-color:beige;
   font-weight: bold;
@@ -16,6 +15,12 @@
 
 #searchBar {
   font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#searchRace {
+  font-size:20px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -29,13 +34,15 @@
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
 
 }
 
 #f1Table td, #f1Table th {
     border: 1px solid #ddd;
     padding: 8px;
-   
+    width:20%;
+
 }
 
 #f1Table tr:nth-child(even){
@@ -43,12 +50,13 @@
   color: white;
 }
 
-#f1Table tr:hover {background-color: #ddd;}
+#f1Table tr:hover {
+  background-color: #ddd;}
 
 #f1Table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color: yellow;
     color: black;
 }
