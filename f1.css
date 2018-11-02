@@ -1,13 +1,10 @@
 .inputBox {
   background-color: yellow;
   color:black;
-  width: 80%;
+  width: 100%;
   padding: 10px 10px;
 }
-#searchRace {
-  background-color:white;
-  opacity: 40%;
-}
+
 .f1 {
   background-color:beige;
   font-weight: bold;
@@ -29,13 +26,15 @@
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
 
 }
 
 #f1Table td, #f1Table th {
     border: 1px solid #ddd;
     padding: 8px;
-   
+    width:20%;
+
 }
 
 #f1Table tr:nth-child(even){
@@ -43,12 +42,13 @@
   color: white;
 }
 
-#f1Table tr:hover {background-color: #ddd;}
+#f1Table tr:hover {
+  background-color: #ddd;}
 
 #f1Table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color: yellow;
     color: black;
 }

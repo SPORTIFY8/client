@@ -7,6 +7,8 @@
 </head>
 <body>
   <div class="inputBox">
+      <img style="width:100px ; alt:'f1_flag'" src="https://cdn0.iconfinder.com/data/icons/mobile-development-svg-icons/60/Map_marker-512.png">
+      <h1>F-1 Results Database</h1>
       <h3>Search Race Results</h3>
       <div id="searchRace">
         Season
@@ -17,8 +19,8 @@
       </div>
      
       <div id="searchBar">
-      Search Your Favorite Driver's Profile
-      <input type="text" id="driverSearch" size="40" value="enter driver last name">
+      Search Your Favorite Driver: 
+      <input type="text" id="driverSearch" size="40" placeholder="enter driver last name">
       <p id="searchMessage"></p>
       </div>
   </div>  
@@ -42,16 +44,16 @@
           let round=$("#f1Round").val();
           $.get(`http://localhost:3000/f1/${year}/${round}/results`, function (data){
             let details="<h3>" + data[0].raceName + "</h3>"
-            details += "<h4>"+ data[0].Circuit.circuitId + "</h4>";
-            details += "<h4>"+ data[0].date + "</h4>";
+            details += "<h4>"+"Venue: " + data[0].Circuit.circuitId + "</h4>";
+            details += "<h4>"+ "Date: " + data[0].date + "</h4>";
             let header="";
-            header += "<table> <thead> <tr>"
+            header += "<table> <tr>"
             header+= "<th>" + "position" + "</th>"
             header+= "<th>" + "Driver Number" + "</th>"
             header+= "<th>" + "Driver Name" + "</th>"
             header+= "<th>" + "Constructor" + "</th>"
             header+="<th>" + "Race Time" + "</th>";
-            header+= "<th>" + "Race Status" + "</th> </tr> </thead>"      
+            header+= "<th>" + "Race Status" + "</th> </tr>"      
             let results;
             for(let racer=0;racer<data[0].Results.length;racer++){
               let r=data[0].Results[racer]
@@ -76,7 +78,6 @@
               if(!data.length) $("#searchMessage").html('driver not found! Please try again')
               else{
                 $("#searchMessage").html("got it!")
-                $("#searchMessage").attr("background-color","green")
                 $("#f1Table").empty();
                 let details="";
                 let results="";
