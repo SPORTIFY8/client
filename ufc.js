@@ -1,5 +1,13 @@
 $( document ).ready(function() {
     console.log('document ready')
+    $('#list').empty()
+    $('#list').append(`
+    <div class="col-md-12">
+        <img class="rounded" src="ufchomepage.jpeg">
+    </div>
+    `)
+    
+
 });
 
 function getChampions(){
@@ -7,6 +15,12 @@ function getChampions(){
     $('#buttonE').attr('class','btn btn-dark')
     $('#buttonC').attr('class','btn btn-danger')
     console.log('get champions')
+    $('#list').empty()
+    $('#list').append(`
+    <div class="col-md-12">
+        <img src="https://media1.tenor.com/images/db85ba00c6073b451a8f05156a66524e/tenor.gif?itemid=9856796">
+    </div>
+    `)
 
     $.ajax({
         method : 'GET',
@@ -56,6 +70,12 @@ function getNews(){
     $('#buttonE').attr('class','btn btn-dark')
     $('#buttonC').attr('class','btn btn-dark')
     console.log('get news')
+    $('#list').empty()
+    $('#list').append(`
+    <div class="col-md-12">
+        <img src="https://media1.tenor.com/images/db85ba00c6073b451a8f05156a66524e/tenor.gif?itemid=9856796">
+    </div>
+    `)
 
     $.ajax({
         method : 'GET',
@@ -65,12 +85,13 @@ function getNews(){
         // console.log(response.slice(0,12))
         // console.log(response[0])
         let sorted = response.slice(0,12)
+        console.log(sorted[0])
         $('#list').empty()
 
         for(let i = 0 ; i < sorted.length ; i ++){
             $('#list').append(`
             <div class="col ml-4">
-                <div class="card mb-5" style="width: 18rem;height:300px">
+                <div class="card mb-5" style="width: 18rem;height:300px" onclick="openNews(${sorted[i].id})">
                     <img class="card-img-top" src="${sorted[i].thumbnail}" alt="Card image cap">
                     <div class="card-body">
                         <p class="card-text font-weight-bold">${sorted[i].title}</p>
@@ -90,6 +111,12 @@ function getEvents(){
     $('#buttonE').attr('class','btn btn-danger')
     $('#buttonC').attr('class','btn btn-dark')
     console.log('get events')
+    $('#list').empty()
+    $('#list').append(`
+    <div class="col-md-12">
+        <img src="https://media1.tenor.com/images/db85ba00c6073b451a8f05156a66524e/tenor.gif?itemid=9856796">
+    </div>
+    `)
 
     $.ajax({
         method : 'GET',
@@ -98,23 +125,27 @@ function getEvents(){
     .done(response=>{
         // console.log(response.slice(0,12))
         let sorted = response.slice(0,12)
+        console.log(sorted[0])
         $('#list').empty()
         for(let i = 0 ; i < sorted.length ; i ++){
             // console.log(sorted[i])
             $('#list').append(`
             <div class="col ml-4">
-                <div class="card mb-3" style="width: 18rem;height:600px">
+                <div class="card mb-5" style="width: 20rem;height:700px">
                     <div class="card-header bg-dark text-white">
                         <strong>${sorted[i].base_title}</strong>
                     </div>
-                    <img class="card-img-top" src="${sorted[i].feature_image}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title bg-light">${sorted[i].title_tag_line}</h5>
+                    <img class="card-img-top" src="${sorted[i].secondary_feature_image}" alt="Card image cap" style="height:300px">
+                    <div class="card-body bg-dark text-center">
+                        <h5 class="card-title bg-warning rounded"><strong>${sorted[i].title_tag_line}</strong></h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item bg-light"><b>Arena :</b> ${sorted[i].arena}</li>
                             <li class="list-group-item bg-light"><b>Location :</b> ${sorted[i].location}</li>
                             <li class="list-group-item bg-light"><b>Date :</b> ${sorted[i].event_date.slice(0,10)}</li>
                         </ul>
+                    </div>
+                    <div class="card-footer bg-dark">
+                        <p class="bg-warning rounded">${sorted[i].subtitle}</p>
                     </div>
                 </div>
             </div>
@@ -142,8 +173,8 @@ function getFighter(id){
             <div class="col-md-6 mt-5 mb-5">
                 <img src="${response.left_full_body_image}">
             </div>
-            <div class="col-md-6 mt-5 mb-5">
-                <div class="card" style="width: 27rem;">
+            <div class="col-md-6 mb-5">
+                <div class="card border border-dark" style="width: 27rem;">
                 <div class="card-header bg-dark text-white">
                     <h3>${response.first_name} ${response.last_name}</h3>
                 </div>
@@ -169,4 +200,15 @@ function getFighter(id){
     .fail(error=>{
         console.log(error)
     })
+}
+
+function openNews(id){
+    var win = window.open(`http://ufc-data-api.ufc.com/api/v3/us/news/${id}`);
+    if (win) {
+        //Browser has allowed it to be opened
+        win.focus();
+    } else {
+        //Browser has blocked it
+        alert('Please allow popups for this website');
+    }
 }
