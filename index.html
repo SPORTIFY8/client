@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="f1.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="inputBox">
+      <h3>Search Race Results</h3>
+      <div id="searchRace">
+        Season
+        <select class="f1" id="f1Season"> </select>
+        Round
+        <select class="f1" id="f1Round"></select>
+        <button style="margin-left:30px" id="searchButton" >Search</button>
+      </div>
+     
+      <div id="searchBar">
+      Search Your Favorite Driver's Profile
+      <input type="text" id="driverSearch" size="40" value="enter driver last name">
+      <p id="searchMessage"></p>
+      </div>
+  </div>  
+  
+  <div id="f1Table"></div>
+
+  <script src="./jquery.js"></script>
+  <script >
+    $("document").ready(function (){
+      for(let year=2004; year<2018; year++){
+        let option=`<option id=${year}>` + year + "</option>" 
+        $("#f1Season").append(option);
+      }
+      for(let race=1; race<18; race++){
+        let round=`<option id=round${race}>` + race + "</option>" 
+        $("#f1Round").append(round)
+      }
+      $("#searchButton").click (function() {
+          $("#f1Table").empty();
+          let year=$("#f1Season").val();
+          let round=$("#f1Round").val();
+          $.get(`http://localhost:3000/f1/${year}/${round}/results`, function (data){
+            let details="<h3>" + data[0].raceName + "</h3>"
+            details += "<h4>"+ data[0].Circuit.circuitId + "</h4>";
+            details += "<h4>"+ data[0].date + "</h4>";
+            let header="";
+            header += "<table> <thead> <tr>"
+            header+= "<th>" + "position" + "</th>"
+            header+= "<th>" + "Driver Number" + "</th>"
+            header+= "<th>" + "Driver Name" + "</th>"
+            header+= "<th>" + "Constructor" + "</th>"
+            header+="<th>" + "Race Time" + "</th>";
+            header+= "<th>" + "Race Status" + "</th> </tr> </thead>"      
+            let results;
+            for(let racer=0;racer<data[0].Results.length;racer++){
+              let r=data[0].Results[racer]
+              results+="<tr><td>" + r.position + "</td>";
+              results+="<td>" + r.number + "</td>";
+              results+="<td>" + r.Driver.givenName +" "+ r.Driver.familyName + "</td>";
+              results+="<td>" + r.Constructor.constructorId + "</td>";
+              r.status==="Finished" ? (results+="<td>" + r.Time.time + "</td>") : (results+="<td> none </td>")
+              results+="<td>" + r.status + "</td></tr>";
+            }
+            header+= "</table>"
+            $("#f1Table").append(details, header,results)
+            $("#f1Table").wrap('<div class="dataTables_scroll" />');
+          })
+      })
+      $("#driverSearch").keypress(function(e) {
+          const key = e.which;
+          if(key == 13) {
+            $("#searchMessage").html("searching, please wait...")
+            let search=$("#driverSearch").val().trim();
+            $.get(`http://localhost:3000/f1/drivers/${search}`, function (data) {
+              if(!data.length) $("#searchMessage").html('driver not found! Please try again')
+              else{
+                $("#searchMessage").html("got it!")
+                $("#searchMessage").attr("background-color","green")
+                $("#f1Table").empty();
+                let details="";
+                let results="";
+                details += "<div class=driver> <p>"+ "Name: " + data[0].DriverStandings[0].Driver.givenName +" "+data[0].DriverStandings[0].Driver.familyName +"</p>"
+                details += "<p>"+ "Nationality: " + data[0].DriverStandings[0].Driver.nationality +"</p>"
+                details += "<p>"+ "DOB: " + data[0].DriverStandings[0].Driver.dateOfBirth +"</p> </div>"
+                results += "<table> <thead> <tr>"
+                results+= "<th>" + "Season" + "</th>"
+                results+= "<th>" + "Total Points" + "</th>"
+                for(let year=0;year<data.length;year++){
+                  let r=data[year]
+                  results+="<tr><td>" + r.season + "</td>";
+                  results+="<td>" + r.DriverStandings[0].points + "</td></tr>";
+                }
+                results+= "</table>"
+                $("#f1Table").append(details,results)
+                $("#f1Table").wrap('<div class="dataTables_scroll" />');
+              }
+          })
+        }
+      })
+  })
+
+  </script>
+</body>
+</html>

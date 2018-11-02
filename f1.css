@@ -1,0 +1,54 @@
+.inputBox {
+  background-color: yellow;
+  color:black;
+  width: 80%;
+  padding: 10px 10px;
+}
+#searchRace {
+  background-color:white;
+  opacity: 40%;
+}
+.f1 {
+  background-color:beige;
+  font-weight: bold;
+  margin: 0 20px
+}
+
+#searchBar {
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.dataTables_scroll
+{
+    height: 400px;
+    overflow:auto;
+}
+#f1Table {
+    padding: 4px;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+
+}
+
+#f1Table td, #f1Table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+   
+}
+
+#f1Table tr:nth-child(even){
+  background-color: #141407;
+  color: white;
+}
+
+#f1Table tr:hover {background-color: #ddd;}
+
+#f1Table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: yellow;
+    color: black;
+}
