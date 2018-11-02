@@ -54,6 +54,7 @@
                 })
                 .done(function(response) {
                     localStorage.setItem('token', response)
+                    window.location = 'ufc.html'
                 })
                 .fail(function(error) {
                     alert('error.responseText')
