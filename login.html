@@ -10,10 +10,37 @@
     <meta name="google-signin-client_id" content="1091926446865-r2jtibfi57qbi2oi8hpr9ks3ghkgaogt.apps.googleusercontent.com">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <meta name="google-signin-client_id" content="231753294371-1tf5l5aiaja5iqqgi35lejqc912ep49r.apps.googleusercontent.com">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4 text-center">S P O R T I F Y</h1>
+        <!-- <img src="https://images.cooltext.com/5215802.gif" width="300" height="160" alt="S P O R T I F Y" /> -->
+      </div>
+    </div>
+
+    <!-- GOOGLE LOGIN -->
     <script>
         function onSignIn(googleUser) {
             // localStorage.removeItem('token')
@@ -38,6 +65,36 @@
             auth2.signOut().then(function() {
                 localStorage.removeItem('token')
             });
+        }
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        $( document ).ready(function() {
+            checkToken()
+            let token = localStorage.getItem('token')
+            if(token){
+                window.location = 'ufc.html'
+            }else{
+                console.log('belum ada token')
+            }
+        });
+
+        function checkToken(){
+            let token = localStorage.getItem('token')
+            if(token){
+                window.location = 'ufc.html'
+                location.reload()
+            }else{
+                console.log('belum ada token')
+            }
         }
     </script>
 </body>

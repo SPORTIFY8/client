@@ -6,7 +6,17 @@ $( document ).ready(function() {
         <img class="rounded mb-5" src="ufchomepage.jpeg">
     </div>
     `)
+    checkToken()
 });
+
+function checkToken(){
+    let token = localStorage.getItem('token')
+    if(token){
+
+    }else{
+        window.location = 'login.html'
+    }
+}
 
 function getChampions(){
     $('#buttonN').attr('class','btn btn-dark')
