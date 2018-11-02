@@ -3,11 +3,11 @@ $( document ).ready(function() {
     $('#list').empty()
     $('#list').append(`
     <div class="col-md-12">
-        <img class="rounded" src="ufchomepage.jpeg">
+        <img class="rounded mb-5" src="ufchomepage.jpeg">
     </div>
-    `)
-    
 
+
+    `)
 });
 
 function getChampions(){
@@ -42,18 +42,24 @@ function getChampions(){
 
             $('#list').append(`
             <div class="col ml-4">
+            
                 <div class="card mb-5" style="width: 18rem;" onclick="getFighter('${response[i].id}')">
                     <div class="card-header bg-dark text-white">
                         <strong>${response[i].weight_class}</strong>
                     </div>
-                    <img class="card-img-top mt-2" src="${response[i].profile_image}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title bg-light">${response[i].first_name} ${response[i].last_name}</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-light"><b>Wins :</b> ${response[i].wins}</li>
-                            <li class="list-group-item bg-light"><b>Loss :</b> ${response[i].losses}</li>
-                            <li class="list-group-item bg-light"><b>Draw :</b> ${response[i].draws}</li>
-                        </ul>
+                    <div class="view overlay">
+                        <img class="card-img-top mt-2" src="${response[i].profile_image}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title bg-light">${response[i].first_name} ${response[i].last_name}</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-light"><b>Wins :</b> ${response[i].wins}</li>
+                                <li class="list-group-item bg-light"><b>Loss :</b> ${response[i].losses}</li>
+                                <li class="list-group-item bg-light"><b>Draw :</b> ${response[i].draws}</li>
+                            </ul>
+                        </div>
+                        <div class="mask flex-center rgba-red-light">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,6 +165,13 @@ function getEvents(){
 
 function getFighter(id){
     // console.log(id)
+    $('#list').empty()
+    $('#list').append(`
+    <div class="col-md-12">
+        <img src="https://media1.tenor.com/images/db85ba00c6073b451a8f05156a66524e/tenor.gif?itemid=9856796">
+    </div>
+    `)
+
     $.ajax({
         method : 'GET',
         url : `http://ufc-data-api.ufc.com/api/v3/us/fighters/${id}.json`
