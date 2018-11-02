@@ -5,8 +5,6 @@ $( document ).ready(function() {
     <div class="col-md-12">
         <img class="rounded mb-5" src="ufchomepage.jpeg">
     </div>
-
-
     `)
 });
 
@@ -43,11 +41,11 @@ function getChampions(){
             $('#list').append(`
             <div class="col ml-4">
             
-                <div class="card mb-5" style="width: 18rem;" onclick="getFighter('${response[i].id}')">
+                <div class="card mb-5" style="width: 18rem;" onclick="getFighter('${response[i].id}')" style="cursor:pointer;">
                     <div class="card-header bg-dark text-white">
                         <strong>${response[i].weight_class}</strong>
                     </div>
-                    <div class="view overlay">
+                    <div class="view overlay" style="cursor:pointer">
                         <img class="card-img-top mt-2" src="${response[i].profile_image}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title bg-light">${response[i].first_name} ${response[i].last_name}</h5>
@@ -97,10 +95,16 @@ function getNews(){
         for(let i = 0 ; i < sorted.length ; i ++){
             $('#list').append(`
             <div class="col ml-4">
-                <div class="card mb-5" style="width: 18rem;height:300px" onclick="openNews(${sorted[i].id})">
-                    <img class="card-img-top" src="${sorted[i].thumbnail}" alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-text font-weight-bold">${sorted[i].title}</p>
+                <div class="card mb-5" style="width: 18rem;height:300px" onclick="openNews(${sorted[i].id})" style="cursor:pointer;">
+                    <div class="view overlay" style="height:300px;cursor:pointer;">
+
+                        <img class="card-img-top" src="${sorted[i].thumbnail}" alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text font-weight-bold">${sorted[i].title}</p>
+                        </div>
+
+                        <div class="mask flex-center rgba-red-light"></div>
+                
                     </div>
                 </div>
             </div>
