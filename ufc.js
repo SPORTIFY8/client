@@ -14,6 +14,7 @@ function getChampions(){
     })
     .done(response=>{
         $('#list').empty()
+        // console.log(response[0])
         for(let i = 0 ; i < response.length ; i ++){
             if(response[i].last_name === null){
                 response[i].last_name = ''
@@ -27,7 +28,7 @@ function getChampions(){
 
             $('#list').append(`
             <div class="col ml-4">
-                <div class="card" style="width: 18rem;">
+                <div class="card mb-5" style="width: 18rem;" onclick="getFighter('${response[i].id}')">
                     <div class="card-header bg-dark text-white">
                         <strong>${response[i].weight_class}</strong>
                     </div>
@@ -95,11 +96,11 @@ function getEvents(){
         url : `http://ufc-data-api.ufc.com/api/v3/us/events`
     })
     .done(response=>{
-        console.log(response.slice(0,12))
+        // console.log(response.slice(0,12))
         let sorted = response.slice(0,12)
         $('#list').empty()
         for(let i = 0 ; i < sorted.length ; i ++){
-            console.log(sorted[i])
+            // console.log(sorted[i])
             $('#list').append(`
             <div class="col ml-4">
                 <div class="card mb-3" style="width: 18rem;height:600px">
@@ -119,8 +120,26 @@ function getEvents(){
             </div>
             `)
         }
+    })
+    .fail(error=>{
+        console.log(error)
+    })
+}
 
+function getFighter(id){
+    console.log(id)
+    $.ajax({
+        method : 'GET',
+        url : `http://ufc-data-api.ufc.com/api/v3/us/fighters/${id}.json`
+    })
+    .done(response=>{
+        console.log(response)
+        $('#list').empty()
+        $('#list').append(`
 
+        ${JSON.stringify(response)}
+
+        `)
     })
     .fail(error=>{
         console.log(error)
