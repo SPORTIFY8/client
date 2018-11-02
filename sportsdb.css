@@ -1,0 +1,50 @@
+#container {
+    display: block;
+    overflow: auto
+}
+#left {
+    float: left;
+    height: 500px;
+    width: 100%;
+    border: 2px black solid;
+    overflow: scroll;
+    padding: 5px;
+    background-color: #6C7A7D;
+}
+
+#right {
+    float: right;
+    height: 500px;
+    width:50%;
+    border: 2px black solid;
+    overflow: scroll;
+    padding: 5px;
+    background-color: #6C7A7D
+}
+
+.data {
+    margin: 5px;
+}
+
+.data:hover {
+    color: #990000;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1px;
+    font-weight: 600
+    
+}
+
+.category {
+    color: crimson;
+    border: 0
+}
+.category:hover {
+    background-color: crimson;
+    color: white;
+}
+
+#players {
+    height: 500px;
+    overflow: scroll
+}
