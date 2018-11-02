@@ -67,6 +67,13 @@
   <script src="dist/app.min.js"></script>
   <script >
     $("document").ready(function () {
+
+      let token = localStorage.getItem('token')
+      if(token){
+
+      }else{
+        window.location = 'login.html'
+      }
      
 
       //create drop down lists 
